@@ -13,6 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       })
     }
+    
+    // allows the user to submit their answer using the enter key.
+    document.getElementById('answer-box').addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        checkAnswer();
+      }
+    })
 
     runGame('addition')
 })
@@ -22,6 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
  * and after the users answer has been processed.
  */
 function runGame(gameType) {
+  
+  // clears the value n the answer box at the start of each game
+  document.getElementById('answer-box').value = '';
+  // puts the cursor in the answer box at the start of each game
+  document.getElementById('answer-box').focus();
 
   /* Creates random numbers between 1-25. The '+1' at the end is because Math.floor rounds down so would put out 0-24 not 1-25 */
   let num1 = Math.floor(Math.random() * 25) + 1;
@@ -33,6 +45,8 @@ function runGame(gameType) {
     displayMultiplyQuestion(num1, num2);
   } else if (gameType === 'subtract') {
     displaySubtractQuestion(num1, num2);
+  } else if (gameType === 'division') {
+    displayDivisionQuestion(num1, num2);
   } else {
     alert(`Unknown game type: ${gameType}`);
     throw `Unknown game type: ${gameType}. Aborting!`
@@ -124,6 +138,9 @@ function displayMultiplyQuestion(operand1, operand2) {
   document.getElementById('operator').textContent = 'x';
 }
 
-function displayDivisionQuestion() {
-    
+function displayDivisionQuestion(operand1, operand2) {
+  
+  document.getElementById('operand1').textContent = operand1 > operand2 ? operand1 : operand2;
+  document.getElementById('operand2').textContent = operand1 > operand2 ? operand2 : operand1;
+  document.getElementById('operator').textContent = '/';  
 }
